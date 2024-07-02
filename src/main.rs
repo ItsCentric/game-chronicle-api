@@ -1,3 +1,5 @@
+use std::env;
+
 use dotenv::dotenv;
 
 mod handlers;
@@ -8,6 +10,10 @@ async fn main() {
     dotenv().ok();
     let routes = routes::routes();
 
-    println!("Server started at http://localhost:8000");
-    warp::serve(routes).run(([127, 0, 0, 1], 8000)).await;
+    let port = env::var("PORT")
+        .unwrap_or_else(|_| "8000".to_string())
+        .parse()
+        .unwrap();
+    println!("Server started at http://localhost:{}", port);
+    warp::serve(routes).run(([0, 0, 0, 0], port)).await;
 }
