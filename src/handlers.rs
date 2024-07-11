@@ -20,6 +20,8 @@ pub struct AccessTokenResponse {
 pub struct DumpResponse {
     #[serde(rename(deserialize = "s3_url"))]
     pub url: String,
+    #[serde(rename(deserialize = "schema_version"))]
+    pub version: String,
 }
 
 async fn authenticate_with_twitch() -> Result<String, Box<dyn error::Error>> {
